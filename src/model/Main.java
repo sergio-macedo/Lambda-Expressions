@@ -1,30 +1,26 @@
 package model;
 
-import entities.Product;
-import services.ProductService;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Product> list = new ArrayList<>();
+        List<Integer> list = Arrays.asList(3, 4, 5, 10, 7);
 
-        list.add(new Product("Tv", 900.0));
-        list.add(new Product("Tablet", 400.0));
-        list.add(new Product("Mouse", 40.0));
-        list.add(new Product("case", 80.0));
+        Stream<Integer> st1 = list.stream().map(x -> x * 10);
 
-        ProductService productService = new ProductService();
-        double price = 100;
+        System.out.println(Arrays.toString(st1.toArray()));
 
-        double sum = productService.filteredSum(list, product -> product.getPrice() < price);
-        System.out.println("Sum =" + String.format("%.2f", sum));
+        Stream<String> st2 = Stream.of("Maria", "bob", "alice");
+        System.out.println(Arrays.toString(st2.toArray()));
 
+        Stream<Integer> st3 = Stream.iterate(12, x -> x + 2);
+        System.out.println(Arrays.toString(st3.limit(10).toArray()));
 
-
-
-
+        Stream<Long> st4 = Stream.iterate(new Long[]{0L, 1L}, p -> new Long[]{p[1], p[0] + p[1]}).map(p -> p[0]);
+        System.out.println(Arrays.toString(st4.limit(15).toArray()));
 
 
     }
