@@ -1,30 +1,47 @@
 package model;
 
 
+import entities.Product;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Integer> list = Arrays.asList(3, 4, 5, 10, 7);
+        Locale.setDefault(Locale.US);
+        Scanner sc = new Scanner(System.in);
 
-        Stream<Integer> st1 = list.stream().map(x -> x * 10);
+        System.out.println("Enter full file path");
+        String path = sc.nextLine();
 
-        System.out.println(Arrays.toString(st1.toArray()));
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            List<Product> list = new ArrayList<>();
+            String line = br.readLine();
+            while (line != null) {
+                String[] fields = line.split(",");
+                list.add(new Product(fields[0], Double.parseDouble(fields[1])));
+                line = br.readLine();
+            }
+            double avg = list.stream().map(product -> product.getPrice())
+                    .reduce(0.0, (x, y) -> x + y / list.size());
 
-        int sum = list.stream().reduce(0, (x, y) -> x + y);
+            System.out.println("the average price is: " + avg);
 
-        System.out.println("Sum = " + sum);
+            Comparator<String> comp = Comparator.comparing(s -> s.toUpperCase(Locale.ROOT));
 
-        List<Integer> newList = list.stream()
-                .filter(x -> x % 2 != 0)
-                .map(x -> x * 10)
-                .collect(Collectors.toList());
+            List<String> names = list.stream().filter(p -> p.getPrice() < avg).map(p -> p.getName())
+                    .sorted(comp.reversed()).collect(Collectors.toList());
 
-        System.out.println(Arrays.toString(newList.toArray()));
+            names.forEach(System.out::println);
 
 
+        } catch (IOException e) {
+            System.out.println("error: " + e.getMessage());
+        }
+        sc.close();
     }
 }
