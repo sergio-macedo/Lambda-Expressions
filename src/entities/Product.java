@@ -1,6 +1,8 @@
 package entities;
 
 
+import java.util.Locale;
+
 public class Product {
     private String name;
     private Double price;
@@ -21,15 +23,12 @@ public class Product {
     public Double getPrice() {
         return price;
     }
-
-    public static void staticPriceUpdate(Product product) {
-        product.setPrice(product.getPrice() * 1.1);
+    public static String staticUpperCaseName(Product product) {
+        return product.getName().toUpperCase(Locale.ROOT);
     }
-
-    public void PriceUpdate() {
-        price = price * 1.1;
+    public String  nonStaticUpperCaseName() {
+        return name.toUpperCase(Locale.ROOT);
     }
-
 
     public void setPrice(Double price) {
         this.price = price;
