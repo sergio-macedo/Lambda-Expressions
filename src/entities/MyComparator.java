@@ -1,4 +1,5 @@
 package entities;
+
 import java.util.Comparator;
 import java.util.Locale;
 

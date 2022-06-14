@@ -2,27 +2,32 @@ package model;
 
 import entities.MyComparator;
 import entities.Product;
+import util.ProductPredicate;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Main {
 
     public static void main(String[] args) {
         List<Product> list = new ArrayList<>();
 
-        list.add(new Product ("Tv", 900.0));
-        list.add(new Product ("Tablet", 400.0));
-        list.add(new Product ("zaoaNotebook", 1200.0));
+        list.add(new Product("Tv", 900.0));
+        list.add(new Product("Tablet", 400.0));
+        list.add(new Product("Mouse", 40.0));
+        list.add(new Product("case", 80.0));
 
-      //  Comparator<Product> comparator = (p1,p2) ->
-       //    p1.getName().toUpperCase(Locale.ROOT).compareTo(p2.getName().toUpperCase(Locale.ROOT));
+        //list.removeIf(new ProductPredicate()); a way using classes to do it.
 
+        //list.removeIf(Product::staticProductPredicate); using a static method as an argument
 
+        //list.removeIf(Product::nonStaticProductPredicate); using a non static as an argument
 
-        list.sort((p1,p2) ->p1.getName().toUpperCase(Locale.ROOT).compareTo(p2.getName().toUpperCase(Locale.ROOT)));
+        //Predicate<Product> predicate = p -> p.getPrice() >= 100; declarating a predicate before using it.
+        list.removeIf(p -> p.getPrice() >= 100);
 
-        for (Product product : list) {
-            System.out.println(product);
+        for (Product p : list) {
+            System.out.println(p);
         }
 
     }
