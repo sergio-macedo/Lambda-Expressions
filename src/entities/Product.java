@@ -1,7 +1,7 @@
 package entities;
 
 
-public class Product  {
+public class Product {
     private String name;
     private Double price;
 
@@ -22,11 +22,12 @@ public class Product  {
         return price;
     }
 
-    public static boolean staticProductPredicate (Product product) {
-        return product.getPrice() >= 100;
+    public static void staticPriceUpdate(Product product) {
+        product.setPrice(product.getPrice() * 1.1);
     }
-    public boolean nonStaticProductPredicate () {
-        return price >= 100;
+
+    public void PriceUpdate() {
+        price = price * 1.1;
     }
 
 

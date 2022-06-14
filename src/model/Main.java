@@ -1,11 +1,10 @@
 package model;
 
-import entities.MyComparator;
 import entities.Product;
-import util.ProductPredicate;
+import util.PriceUpdate;
 
 import java.util.*;
-import java.util.function.Predicate;
+import java.util.function.Consumer;
 
 public class Main {
 
@@ -17,18 +16,17 @@ public class Main {
         list.add(new Product("Mouse", 40.0));
         list.add(new Product("case", 80.0));
 
-        //list.removeIf(new ProductPredicate()); a way using classes to do it.
+        double factor = 1.1;
 
-        //list.removeIf(Product::staticProductPredicate); using a static method as an argument
 
-        //list.removeIf(Product::nonStaticProductPredicate); using a non static as an argument
+        //list.forEach(consumer); // declaring the consumer at the main program.
 
-        //Predicate<Product> predicate = p -> p.getPrice() >= 100; declarating a predicate before using it.
-        list.removeIf(p -> p.getPrice() >= 100);
+        // list.forEach(new PriceUpdate()); // using a consumer class and passing it as an argument.
+        //list.forEach(Product::staticPriceUpdate);// uses a static method at the Product class
+        //list.forEach(Product::PriceUpdate); // uses a non-static method using the parameters from the class
+        list.forEach(product -> product.setPrice(product.getPrice() * factor));
 
-        for (Product p : list) {
-            System.out.println(p);
-        }
+        list.forEach(System.out::println);
 
     }
 }
